@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MagnifyingGlassIcon, UserIcon, XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { Link, useLocation } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ isAdmin }) => {
   const location = useLocation();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -41,7 +41,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
             <img src="/logo%20mitra.jpg" alt="Logo" className="h-10 w-auto md:h-12 object-contain rounded-md" />
-            <span className="font-bold text-xl md:text-2xl text-gray-800 tracking-tight">Liphone</span>
+            <span className="font-bold text-xl md:text-2xl text-gray-800 tracking-tight">Liphone Store</span>
           </Link>
 
           {/* Desktop Menu */}
@@ -75,7 +75,7 @@ const Navbar = () => {
               <MagnifyingGlassIcon className="h-6 w-6" />
             </button>
             
-            <Link to="/profile" className="text-gray-400 hover:text-blue-600 transition-colors">
+            <Link to={isAdmin ? "/admin" : "/login"} className={`${isAdmin ? 'text-blue-600' : 'text-gray-400'} hover:text-blue-600 transition-colors`} title={isAdmin ? "Dashboard Admin" : "Login Staff"}>
               <UserIcon className="h-6 w-6" />
             </Link>
           </div>

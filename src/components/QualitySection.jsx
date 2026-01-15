@@ -1,28 +1,39 @@
 import React from 'react';
+import { StarIcon, GiftIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 
 const QualitySection = () => {
-  return (
-    <section className="relative py-24 bg-gray-900 overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-60 mix-blend-overlay"
-        style={{ backgroundImage: "url('/quality-bg.png')" }}
-      ></div>
-      
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-blue-900/40"></div>
+  const features = [
+    {
+      icon: <StarIcon className="w-8 h-8 text-gray-600" />,
+      title: "Kondisi Terbaik",
+      description: "Diuji oleh para ahli untuk berfungsi dengan sepenuhnya, seperti sedia kala"
+    },
+    {
+      icon: <GiftIcon className="w-8 h-8 text-gray-600" />,
+      title: "IMEI Permanen",
+      description: "Kami berkomitmen IMEI akan selalu berlaku, jika sinyal hilang, Anda dapat menghubungi kami."
+    },
+    {
+      icon: <ShieldCheckIcon className="w-8 h-8 text-gray-600" />,
+      title: "Garansi 1 Tahun",
+      description: "Tenang saja, karena kami menjamin perlindungan selama 12 bulan penuh."
+    }
+  ];
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-          Kualitas dan pengecekan <br/> secara profesional
-        </h2>
-        <p className="text-blue-200 text-lg max-w-2xl mx-auto mb-10">
-          Setiap perangkat melalui 40+ titik pengecekan ketat oleh teknisi bersertifikat kami untuk memastikan kualitas terbaik.
-        </p>
-        
-        <button className="inline-flex items-center px-8 py-3 border-2 border-white text-base font-medium rounded-full text-white hover:bg-white hover:text-gray-900 transition-colors duration-300">
-          Pelajari Standar Kualitas Kami
-        </button>
+  return (
+    <section className="py-16 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-3 gap-8 text-center">
+          {features.map((feature, index) => (
+            <div key={index} className="flex flex-col items-center p-6">
+              <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-6">
+                {feature.icon}
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
+              <p className="text-gray-500 leading-relaxed max-w-xs">{feature.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

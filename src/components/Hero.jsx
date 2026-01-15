@@ -24,13 +24,13 @@ const Hero = ({ onCalculate }) => {
                 #1 Platform Jual Beli HP Premium
               </span>
               <h1 className="text-5xl lg:text-7xl font-extrabold leading-tight tracking-tight">
-                Jual Hape <br/>
+                Jual IPhone <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">
-                  Gak Ribet?
+                  Tanpa Ribet?
                 </span>
               </h1>
               <h2 className="text-2xl lg:text-3xl font-medium text-blue-100">
-                Jual Hape Bekas Kamu di <span className="font-bold text-white">Liphone!</span>
+                Jual Aja Iphone Kamu di <span className="font-bold text-white">Liphone Store!</span>
               </h2>
             </div>
 
@@ -51,12 +51,14 @@ const Hero = ({ onCalculate }) => {
             
             <div className="pt-4 flex gap-4">
               <div className="flex -space-x-2">
-                 {[1,2,3,4].map(i => (
-                   <div key={i} className="w-10 h-10 rounded-full border-2 border-blue-900 bg-gray-300"></div> 
+                 {['AD', 'RF', 'JK', 'MS'].map((initial, i) => (
+                   <div key={i} className="w-10 h-10 rounded-full border-2 border-blue-900 bg-blue-100 flex items-center justify-center text-xs font-bold text-blue-900">
+                     {initial}
+                   </div> 
                  ))}
               </div>
               <div className="flex flex-col justify-center text-xs text-blue-200">
-                <span className="font-bold text-white">1,000+</span>
+                <span className="font-bold text-white">40-50</span>
                 <span>Customer Puas</span>
               </div>
             </div>

@@ -1,15 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
-
-const deals = [
-  { id: 1, name: "iPhone 12 Pro", image: "/12 pro.jpeg", price: "Rp 8.500.000", originalPrice: "Rp 10.000.000" },
-  { id: 2, name: "iPhone 13 Pink", image: "/13 pink.jpeg", price: "Rp 9.200.000", originalPrice: "Rp 11.500.000" },
-  { id: 3, name: "iPhone 15 Pink", image: "/iphone 15 pink.jpeg", price: "Rp 13.500.000", originalPrice: "Rp 15.000.000" },
-  { id: 4, name: "iPhone 16", image: "/iphone 16.jpeg", price: "Rp 16.000.000", originalPrice: "Rp 17.500.000" },
-  { id: 5, name: "iPhone 13 Blue", image: "/13 blue.jpeg", price: "Rp 9.200.000", originalPrice: "Rp 11.500.000" },
-];
+import { ProductContext } from '../context/ProductContext';
 
 const DailyDeals = ({ onProductSelect }) => {
+  const { products } = useContext(ProductContext);
+  const deals = products.filter(p => p.category === 'DailyDeal');
+
   return (
     <div className="bg-blue-50 py-12 px-4 relative overflow-hidden">
       {/* Decorative background elements if needed */}
@@ -40,11 +36,22 @@ const DailyDeals = ({ onProductSelect }) => {
            {deals.map(item => (
              <div 
                key={item.id} 
-               onClick={() => onProductSelect({...item, description: "Promo spesial Deals of The Day. Stok terbatas! Hubungi kami untuk harga terbaik."})}
+               onClick={() => onProductSelect(item)}
                className="min-w-[160px] md:col-span-1 bg-white rounded-2xl p-4 shadow-sm hover:shadow-md transition cursor-pointer flex flex-col items-center justify-between"
              >
-                <div className="flex flex-col items-center w-full">
-                  <img src={item.image} alt={item.name} className="h-32 object-contain mb-4" />
+                <div className="flex flex-col items-center w-full relative">
+                  <img 
+                      src={item.image} 
+                      alt={item.name} 
+                      className={`h-32 object-contain mb-4 ${parseInt(item.stock) === 0 ? 'grayscale opacity-50' : ''}`} 
+                  />
+                  {parseInt(item.stock) === 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+                        <span className="bg-red-600 text-white px-3 py-1 font-bold text-xs transform -rotate-12 rounded shadow-md uppercase">
+                            SOLD
+                        </span>
+                    </div>
+                  )}
                   <h4 className="font-medium text-gray-800 text-center text-sm line-clamp-2 mb-2">{item.name}</h4>
                 </div>
                 

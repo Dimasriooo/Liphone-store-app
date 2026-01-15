@@ -10,8 +10,36 @@ const PriceForm = ({ onSubmit }) => {
     phone: ''
   });
 
+  // Data Models
+  const modelsByBrand = {
+      Apple: {
+          "iPhone 16 Series": ["iPhone 16 Pro Max", "iPhone 16 Pro", "iPhone 16 Plus", "iPhone 16"],
+          "iPhone 15 Series": ["iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15 Plus", "iPhone 15"],
+          "iPhone 14 Series": ["iPhone 14 Pro Max", "iPhone 14 Pro", "iPhone 14 Plus", "iPhone 14"],
+          "iPhone 13 Series": ["iPhone 13 Pro Max", "iPhone 13 Pro", "iPhone 13", "iPhone 13 Mini"],
+          "iPhone 12 Series": ["iPhone 12 Pro Max", "iPhone 12 Pro", "iPhone 12", "iPhone 12 Mini"],
+          "iPhone 11 Series": ["iPhone 11 Pro Max", "iPhone 11 Pro", "iPhone 11"],
+          "iPhone X/SE Series": ["iPhone XS Max", "iPhone XS", "iPhone XR", "iPhone X", "iPhone SE (2020/2022)"],
+          "Older Models": ["iPhone 8 Plus", "iPhone 8", "iPhone 7 Plus", "iPhone 7"]
+      }
+      // Samsung: {
+      //     "Galaxy S24 Series": ["Samsung S24 Ultra", "Samsung S24 Plus", "Samsung S24"],
+      //     "Galaxy S23 Series": ["Samsung S23 Ultra", "Samsung S23 Plus", "Samsung S23", "Samsung S23 FE"],
+      //     "Galaxy S22 Series": ["Samsung S22 Ultra", "Samsung S22 Plus", "Samsung S22"],
+      //     "Galaxy Z Fold Series": ["Samsung Z Fold 6", "Samsung Z Fold 5", "Samsung Z Fold 4", "Samsung Z Fold 3"],
+      //     "Galaxy Z Flip Series": ["Samsung Z Flip 6", "Samsung Z Flip 5", "Samsung Z Flip 4", "Samsung Z Flip 3"],
+      //     "Galaxy S21 Series": ["Samsung S21 Ultra", "Samsung S21 Plus", "Samsung S21", "Samsung S21 FE"]
+      // }
+  };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'brand') {
+        // Reset model when brand changes
+        setFormData(prev => ({ ...prev, brand: value, model: '' }));
+    } else {
+        setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -30,20 +58,30 @@ const PriceForm = ({ onSubmit }) => {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1">
             <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Brand</label>
-            <select name="brand" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" onChange={handleChange} required>
+            <select name="brand" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" onChange={handleChange} value={formData.brand} required>
               <option value="">Pilih Brand</option>
               <option value="Apple">Apple</option>
-              <option value="Samsung">Samsung</option>
-              <option value="Xiaomi">Xiaomi</option>
+              {/* <option value="Samsung">Samsung</option> */}
             </select>
           </div>
           <div className="space-y-1">
             <label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">Model</label>
-            <select name="model" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" onChange={handleChange} required>
-              <option value="">Pilih Model</option>
-              <option value="iPhone 13 Pro">iPhone 13 Pro</option>
-              <option value="iPhone 14">iPhone 14</option>
-              <option value="S23 Ultra">S23 Ultra</option>
+            <select 
+                name="model" 
+                className={`w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all ${!formData.brand && 'opacity-50 cursor-not-allowed'}`} 
+                onChange={handleChange} 
+                value={formData.model}
+                disabled={!formData.brand}
+                required
+            >
+              <option value="">{formData.brand ? "Pilih Model" : "Pilih Brand Dulu"}</option>
+              {formData.brand && modelsByBrand[formData.brand] && Object.entries(modelsByBrand[formData.brand]).map(([series, models]) => (
+                  <optgroup key={series} label={series}>
+                      {models.map(model => (
+                          <option key={model} value={model}>{model}</option>
+                      ))}
+                  </optgroup>
+              ))}
             </select>
           </div>
         </div>
@@ -56,6 +94,7 @@ const PriceForm = ({ onSubmit }) => {
               <option value="128GB">128GB</option>
               <option value="256GB">256GB</option>
               <option value="512GB">512GB</option>
+              <option value="1TB">1TB</option>
             </select>
           </div>
           <div className="space-y-1">
