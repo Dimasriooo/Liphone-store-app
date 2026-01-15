@@ -70,25 +70,25 @@ const AdminDashboard = ({ isAdmin, onLogout }) => {
   return (
     <div className="min-h-screen bg-gray-100 pt-24 pb-12 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
             <div>
                 <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
                 <p className="text-gray-600">Selamat datang kembali, Admin.</p>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 w-full md:w-auto">
                 <button 
                   onClick={() => {
                       if(showAddForm && !isEditing) resetForm();
                       else if (isEditing) resetForm();
                       else setShowAddForm(true);
                   }}
-                  className={`${isEditing ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-green-600 hover:bg-green-700'} text-white px-6 py-2 rounded-lg transition`}
+                  className={`flex-1 md:flex-none text-center ${isEditing ? 'bg-yellow-500 hover:bg-yellow-600' : 'bg-green-600 hover:bg-green-700'} text-white px-6 py-2 rounded-lg transition`}
                 >
                   {showAddForm ? (isEditing ? 'Batal Edit' : 'Tutup Form') : '+ Tambah Produk'}
                 </button>
                 <button 
                     onClick={onLogout} 
-                    className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition"
+                    className="flex-1 md:flex-none bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition"
                 >
                     Logout
                 </button>
@@ -184,8 +184,8 @@ const AdminDashboard = ({ isAdmin, onLogout }) => {
             </div>
         </div>
 
-        {/* Inventory Table */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        {/* Inventory Table (Desktop) */}
+        <div className="hidden md:block bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                 <h3 className="font-bold text-gray-800">Stok Barang</h3>
                 <button className="text-blue-600 text-sm hover:underline">Lihat Semua</button>
@@ -224,6 +224,46 @@ const AdminDashboard = ({ isAdmin, onLogout }) => {
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        {/* Inventory List (Mobile Card View) */}
+        <div className="grid grid-cols-1 gap-4 md:hidden">
+            <h3 className="font-bold text-gray-800 mb-2">Stok Barang</h3>
+            {products.map((item) => (
+                <div key={item.id} className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+                    <div className="flex items-center gap-4 mb-4">
+                        <img src={item.image} alt="" className="w-16 h-16 rounded-lg object-cover bg-gray-100" />
+                        <div>
+                            <h4 className="font-bold text-gray-900">{item.name}</h4>
+                            <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-semibold rounded-full ${item.category === 'BestSeller' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                                {item.category}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div className="space-y-2 text-sm text-gray-600 mb-4 border-t border-b border-gray-100 py-3">
+                        <div className="flex justify-between">
+                            <span>Harga:</span>
+                            <span className="font-semibold text-gray-900">{item.price}</span>
+                        </div>
+                        <div className="flex justify-between">
+                            <span>Stok:</span>
+                            <span className="font-medium text-gray-900">{item.stock || 0} Unit</span>
+                        </div>
+                        <div className="flex justify-between">
+                            <span>Status:</span>
+                            <span className={item.stock > 0 ? "text-green-600" : "text-red-600"}>
+                                {item.stock > 0 ? "Available" : "Out of Stock"}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                        <button onClick={() => handleEdit(item)} className="flex-1 bg-blue-50 text-blue-600 py-2.5 rounded-lg font-medium hover:bg-blue-100 transition">Edit</button>
+                        <button onClick={() => deleteProduct(item.id)} className="flex-1 bg-red-50 text-red-600 py-2.5 rounded-lg font-medium hover:bg-red-100 transition">Hapus</button>
+                    </div>
+                </div>
+            ))}
         </div>
       </div>
     </div>

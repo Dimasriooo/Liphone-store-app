@@ -45,7 +45,7 @@ const Login = ({ onLogin }) => {
                 type="text"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-xl focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Username (Try: admin)"
+                placeholder="Username "
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -58,7 +58,7 @@ const Login = ({ onLogin }) => {
                 type="password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-xl focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Password (Try: admin123)"
+                placeholder="Password "
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -78,11 +78,6 @@ const Login = ({ onLogin }) => {
             >
               Masuk Dashboard
             </button>
-          </div>
-          
-          <div className="text-center text-xs text-gray-400 mt-4">
-            <p>Demo Credentials:</p>
-            <p>User: admin | Pass: admin123</p>
           </div>
         </form>
       </div>

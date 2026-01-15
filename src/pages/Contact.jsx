@@ -35,7 +35,7 @@ const Contact = () => {
                 </div>
                 <h3 className="font-bold text-gray-900 mb-1">Email</h3>
                 <p className="text-gray-500 text-sm mb-3">Untuk kerjasama bisnis</p>
-                <a href=" Alifsyawal99@gmail.com" className="text-orange-600 font-semibold hover:underline">halo@liphone.store</a>
+                <a href="mailto:Alifsyawal99@gmail.com" className="text-orange-600 font-semibold hover:underline">Alifsyawal99@gmail.com</a>
               </div>
             </div>
 
@@ -78,24 +78,32 @@ const Contact = () => {
           {/* Right Column: Message Form */}
           <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-100 h-fit">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Kirim Pesan</h2>
-            <form className="space-y-6" onSubmit={(e) => {e.preventDefault(); alert("Pesan terkirim! Tim kami akan menghubungi Anda segera.")}}>
+            <form className="space-y-6" onSubmit={(e) => {
+              e.preventDefault();
+              const name = e.target[0].value;
+              const userEmail = e.target[1].value;
+              const msg = e.target[2].value;
+              const subject = `Pesan Baru dari Website Liphone: ${name}`;
+              const body = `Nama: ${name}\nEmail: ${userEmail}\n\nPesan:\n${msg}`;
+              window.open(`mailto:Alifsyawal99@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+            }}>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap</label>
-                <input type="text" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" placeholder="Contoh: Budi Santoso" />
+                <input type="text" required className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" placeholder="Contoh: Budi Santoso" />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input type="email" className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" placeholder="budi@example.com" />
+                <input type="email" required className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" placeholder="budi@example.com" />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Pesan / Pertanyaan</label>
-                <textarea rows={4} className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" placeholder="Tulis pesan Anda di sini..."></textarea>
+                <textarea rows={4} required className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" placeholder="Tulis pesan Anda di sini..."></textarea>
               </div>
 
               <button type="submit" className="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/30 hover:bg-blue-700 transition transform hover:-translate-y-0.5">
-                Kirim Pesan
+                Kirim Pesan via Email
               </button>
             </form>
           </div>
